@@ -1,25 +1,22 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
-const authRouter = require('./routes/admin/auth');
-const adminProductsRouter = require('./routes/admin/products');
-const productsRouter = require('./routes/products');
-const cartsRouter = require('./routes/carts');
+module.exports = {
+  forEach(arr, fn) {
+    // for (let i = 0; i < arr.length; i++) {
+    //   const value = arr[i];
+    //   fn(value, i);
+    // }
 
-const app = express();
+    for (let index in arr) {
+      fn(arr[index], index);
+    }
+  },
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cookieSession({
-    keys: ['setOfRandomLetters'],
-  })
-);
-app.use(authRouter);
-app.use(adminProductsRouter);
-app.use(productsRouter);
-app.use(cartsRouter);
+  map(arr, fn) {
+    const result = [];
 
-app.listen(3000, () => {
-  console.log('Listening...');
-});
+    for (let i = 0; i < arr.length; i++) {
+      result.push(fn(arr[i], i));
+    }
+
+    return result;
+  },
+};
